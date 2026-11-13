@@ -1,0 +1,22 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node
+node_modules/
+frontend/dist/
+
+# Local state and secrets
+.env
+*.db
+*.db-journal
+*.sqlite3
+backend/data/
+
+# Tooling
+.DS_Store
+test-results/
+playwright-report/
+e2e/out/
