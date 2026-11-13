@@ -15,7 +15,7 @@ function ResultCard({ r }: { r: ImportResult }) {
       <div className="mb-3 flex items-center gap-2"><CheckCircle2 className="h-5 w-5 text-brand-600" /><h2 className="font-semibold">Read {r.imported} new message{r.imported === 1 ? "" : "s"}</h2></div>
       <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-5">
         {[["Transactions", r.transactions, "text-brand-700"], ["Scams flagged", r.scams, "text-red-600"], ["OTPs", r.otps, ""], ["Promotions", r.promos, ""], ["Other", r.others, ""]].map(([l, v, c]) => (
-          <div key={l as string} className="rounded-xl bg-ink-50 p-3"><div className="text-xs text-ink-500">{l}</div><div className={`num text-xl font-bold ${c}`}>{v}</div></div>
+          <div key={l as string} className="border border-dashed border-ink-900/30 bg-ink-50 p-3"><div className="text-xs text-ink-500">{l}</div><div className={`num text-xl font-bold ${c}`}>{v}</div></div>
         ))}
       </div>
       <ul className="mt-3 space-y-1 text-sm text-ink-600">

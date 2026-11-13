@@ -82,7 +82,7 @@ function AddPanel({ meta, onClose, onSaved }: { meta: Meta; onClose: () => void;
     <div className="fixed inset-0 z-40 flex items-end justify-center bg-ink-900/40 sm:items-center" onClick={onClose}>
       <form onSubmit={submit} className="w-full max-w-md space-y-3 rounded-t-3xl bg-white p-6 sm:rounded-3xl" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label="Add transaction">
         <div className="mb-1 text-lg font-semibold">Add a cash or missing payment</div>
-        <div className="grid grid-cols-2 gap-2 rounded-xl bg-ink-50 p-1 text-sm font-semibold">
+        <div className="grid grid-cols-2 gap-2 border border-dashed border-ink-900/30 bg-ink-50 p-1 text-sm font-semibold">
           {["debit", "credit"].map((d) => <button type="button" key={d} onClick={() => setF({ ...f, direction: d, category: "" })} className={`rounded-lg py-1.5 ${f.direction === d ? "bg-white shadow-card" : "text-ink-500"}`}>{d === "debit" ? "Money out" : "Money in"}</button>)}
         </div>
         <div className="grid grid-cols-2 gap-3">

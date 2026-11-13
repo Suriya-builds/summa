@@ -54,7 +54,7 @@ function Planner({ suggestions, current, onDone }: { suggestions: BudgetSuggesti
           </div>
         ))}
       </div>
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl bg-ink-50 p-3 text-sm">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border border-dashed border-ink-900/30 bg-ink-50 p-3 text-sm">
         <span>Total <b className="num">{inr(total)}</b>{suggestions.average_income > 0 && <> of {inr(suggestions.average_income)} average income · leaves <b className={`num ${suggestions.average_income - total < 0 ? "text-red-600" : "text-brand-700"}`}>{inr(suggestions.average_income - total)}</b></>}</span>
         <button className="btn-brand" onClick={save} disabled={busy}>{busy && <Spinner className="h-4 w-4 text-white" />}Save budget</button>
       </div>
@@ -110,9 +110,9 @@ export default function Budget() {
                         <span className="flex-1 text-sm font-medium">{i.label}</span>
                         <span className={`chip ${CHIP[i.status]}`}>{LABEL[i.status]}</span>
                       </div>
-                      <div className="relative h-2.5 overflow-hidden rounded-full bg-ink-100" role="progressbar" aria-valuenow={Math.round(used)} aria-valuemin={0} aria-valuemax={100} aria-label={`${i.label} budget used`}>
-                        {s.progress.is_current && <div className="absolute inset-y-0 left-0 rounded-full bg-ink-200" style={{ width: `${projected}%` }} />}
-                        <div className={`absolute inset-y-0 left-0 rounded-full ${BAR[i.status]}`} style={{ width: `${used}%` }} />
+                      <div className="relative h-3 overflow-hidden border border-ink-900/70 bg-white" role="progressbar" aria-valuenow={Math.round(used)} aria-valuemin={0} aria-valuemax={100} aria-label={`${i.label} budget used`}>
+                        {s.progress.is_current && <div className="absolute inset-y-0 left-0 bg-ink-200" style={{ width: `${projected}%` }} />}
+                        <div className={`absolute inset-y-0 left-0 ${BAR[i.status]}`} style={{ width: `${used}%` }} />
                       </div>
                       <div className="mt-1.5 flex flex-wrap justify-between gap-x-3 text-xs text-ink-500">
                         <span className="num"><b className="text-ink-800">{inr(i.spent)}</b> of {inr(i.limit)}</span>

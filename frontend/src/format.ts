@@ -38,10 +38,11 @@ export function titleCase(s: string): string {
   return s.toLowerCase().replace(/\b([a-z])/g, (c) => c.toUpperCase());
 }
 
+// Printed-ledger palette: muted inks rather than app-store brights.
 export const CATEGORY_COLORS: Record<string, string> = {
-  food_dining: "#f97316", groceries: "#84cc16", transport: "#0ea5e9", shopping: "#a855f7", bills: "#eab308",
-  rent: "#64748b", entertainment: "#ec4899", health: "#ef4444", personal: "#14b8a6", education: "#6366f1",
-  travel: "#06b6d4", investments: "#10b37c", transfers: "#8b5cf6", cash: "#78716c", fees: "#dc2626", other: "#94a3b8",
-  salary: "#10b37c", refund: "#22c55e", interest: "#059669", transfer_in: "#34d39a", other_income: "#6ee7b7",
+  food_dining: "#c8642a", groceries: "#7c8f3a", transport: "#2f5f9e", shopping: "#7a4a8c", bills: "#bd8c22",
+  rent: "#4a4337", entertainment: "#b04a6a", health: "#bd331c", personal: "#2f8078", education: "#3f4f9a",
+  travel: "#2a7f96", investments: "#1e6943", transfers: "#6a5aa0", cash: "#877d69", fees: "#9d2916", other: "#ada28a",
+  salary: "#1e6943", refund: "#4c9766", interest: "#165538", transfer_in: "#2e7a4b", other_income: "#a8cbae",
 };
-export const colorFor = (c: string) => CATEGORY_COLORS[c] ?? "#94a3b8";
+export const colorFor = (c: string) => CATEGORY_COLORS[c] ?? "#ada28a";

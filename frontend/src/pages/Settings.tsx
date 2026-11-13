@@ -11,7 +11,7 @@ interface Overview { messages: number; transactions: number; budgets: number; me
 function ModelCard({ title, m }: { title: string; m: Record<string, unknown> }) {
   const rows = Object.entries(m).filter(([k]) => k !== "note" && k !== "model");
   return (
-    <div className="rounded-xl bg-ink-50 p-4 text-sm">
+    <div className="border border-dashed border-ink-900/30 bg-ink-50 p-4 text-sm">
       <div className="font-semibold">{title}</div>
       <div className="text-xs text-ink-500">{String(m.model ?? "")}</div>
       <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1">
@@ -65,7 +65,7 @@ export default function SettingsPage() {
           <p className="mb-3 text-sm text-ink-500">Reading, categorising and scam scoring run on the server with small local models. The language model is used only for Ask Summa, AI summaries and, if you opt in, unusual SMS formats.</p>
           {!meta.data ? <Skeleton className="h-40" /> : (
             <div className="space-y-3">
-              <div className="rounded-xl bg-ink-50 p-4 text-sm">
+              <div className="border border-dashed border-ink-900/30 bg-ink-50 p-4 text-sm">
                 <div className="font-semibold">Language model</div>
                 <div className="text-ink-600">{meta.data.llm.enabled ? `${meta.data.llm.provider} · ${meta.data.llm.model}` : "Not configured on this server"}</div>
               </div>
