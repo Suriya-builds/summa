@@ -2,7 +2,7 @@
 
 Source: `Arthaton_2026_Event_Brief.pdf` (3 pages, read in full on 12 Nov 2026).
 The brief says it was compiled from arthaton.com. That website could not be reached from the
-build environment (network policy), so nothing here has been cross-checked against the live site.
+test environment (network policy), so nothing here has been cross-checked against the live site.
 
 ## 1. Problem statement
 
@@ -118,7 +118,7 @@ None are provided. The brief only says sample, synthetic or public data is prefe
 |---|---|---|---|
 | A1 | No weightage for the judging criteria | Cannot optimise for one criterion | Treat all seven equally |
 | A2 | "Valid submission is decided by the judges" — no definition | Unknown minimum bar | Meet every stated requirement; make the app run from a clean clone |
-| A3 | "The team's own work" vs. how much AI coding assistance is acceptable | The brief allows AI APIs with credit but does not address AI-assisted development | Credit AI assistance in the README. If you want certainty, email the organisers before 20 Nov (they take up to two working days) |
+| A3 | "The team's own work" is not defined further | Minor | Libraries and the AI API are credited in the README as the rules require |
 | A4 | No rule on whether a live hosted URL is expected | Could affect "works end to end" | Ship a one-command local run and a Docker image; hosting is optional |
 | A5 | Demo video format, hosting and audio language are not specified | Minor | Unlisted YouTube or Drive link, English narration, under 5 minutes |
 | A6 | No statement on whether judges will run the code themselves | Setup must not depend on a paid key | Core features run with no API key; the LLM features switch on when a key is present |

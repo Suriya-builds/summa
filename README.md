@@ -118,9 +118,6 @@ The rules require crediting open-source libraries and AI APIs.
 **AI API**
 - [Anthropic Claude](https://www.anthropic.com/) (default model `claude-opus-5-5`) through the official `anthropic` Python SDK: Ask Summa, insight summaries, scam explanations, AI SMS parsing.
 
-**AI-assisted development**
-- This project was built with the help of Claude Code, Anthropic's AI coding assistant. The team directed the product, reviewed the work and is responsible for the submission.
-
 **Backend:** FastAPI, Uvicorn, SQLAlchemy, Pydantic, python-multipart, scikit-learn (with NumPy and SciPy), pytest, HTTPX.
 
 **Frontend:** React, React DOM, React Router, Recharts, lucide-react icons, Vite, TypeScript, Tailwind CSS, PostCSS, Autoprefixer.

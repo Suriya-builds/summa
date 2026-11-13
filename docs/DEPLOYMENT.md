@@ -2,7 +2,7 @@
 
 A hosted deployment is **not required** by the Arthaton brief (it asks for a public repository and a demo video). This guide is for anyone who wants a public URL.
 
-**Status:** not deployed. The Docker image has not been built or run in the build environment, which has no Docker daemon. The non-Docker path (`./run.sh`) was tested end to end.
+**Status:** not deployed. The Docker image has not been built or run in the test environment, which has no Docker daemon. The non-Docker path (`./run.sh`) was tested end to end.
 
 ## Single container (recommended)
 

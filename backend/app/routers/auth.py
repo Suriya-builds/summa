@@ -4,7 +4,7 @@ import secrets
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
-from sqlalchemy import select
+from sqlalchemy import delete, select
 from sqlalchemy.orm import Session
 
 from ..config import settings
@@ -56,6 +56,7 @@ def login(body: LoginIn, request: Request, response: Response, db: Session = Dep
     valid = verify_password(body.password, user.password_hash if user else _DUMMY_HASH)
     if user is None or not valid or user.is_demo:
         raise HTTPException(status_code=401, detail="Incorrect email or password.")
+    db.execute(delete(AuthSession).where(AuthSession.expires_at < utcnow()))
     start_session(db, user, response)
     return {"user": user_dict(user)}
 

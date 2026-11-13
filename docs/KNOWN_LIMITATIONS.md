@@ -14,7 +14,7 @@ Stated plainly so judges and users know what to expect.
 ## AI assistant
 
 - **Needs an Anthropic API key**, which costs money per question. Without one, Ask Summa and AI summaries are disabled and everything else works.
-- **Not tested against the live API in the build environment** (no key was available). The tool loop, tool scoping and figure check are tested with a stubbed model.
+- **Not tested against the live API in the test environment** (no key was available). The tool loop, tool scoping and figure check are tested with a stubbed model.
 - **The figure check flags, it does not prevent.** A figure the model did not get from a tool is shown to the user as unverified; the answer is not blocked.
 - **Not financial advice.** The assistant is instructed not to recommend investments, loans, insurance or tax positions.
 
@@ -30,6 +30,6 @@ Stated plainly so judges and users know what to expect.
 - **No database migrations.** The schema is created at start-up. A schema change on an existing database needs a manual migration.
 - **Single instance.** Rate limits live in process memory and SQLite has one writer. Scaling out needs Postgres and a shared rate-limit store.
 - **No email verification or password reset.**
-- **The Docker image was not built or run** in the build environment (no Docker daemon). The non-Docker run path was tested.
+- **The Docker image was not built or run** in the test environment (no Docker daemon). The non-Docker run path was tested.
 - **No hosted deployment** was made or verified.
 - **Demo accounts** are cleaned up only when another demo account is created, after 24 hours.

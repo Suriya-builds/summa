@@ -17,4 +17,4 @@ The brief does not require slides. Use this if a live pitch or a slide in the vi
 
 6. **Impact and what's next.** For students and first-job earners who pay by UPI daily. Next: Android companion app reading SMS on-device, Account Aggregator data, Indian languages, a scam model trained on reported real messages.
 
-7. **Honest limits and credits.** Synthetic training data, parser coverage, needs a key for the assistant. Built with FastAPI, React, scikit-learn and Claude; AI-assisted development credited.
+7. **Honest limits and credits.** Synthetic training data, parser coverage, needs a key for the assistant. Built with FastAPI, React, scikit-learn and the Claude API, all credited in the README.

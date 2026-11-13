@@ -1,19 +1,19 @@
 # Test Report
 
-Last run: 13 Nov 2026, in the build environment (Linux, Python 3.13, Node 22, Chromium via Playwright).
+Last run: 13 Nov 2026, in the test environment (Linux, Python 3.13, Node 22, Chromium via Playwright).
 Every result below was produced by a command that was actually run. Nothing is estimated.
 
 ## Summary
 
 | Suite | Command | Result |
 |---|---|---|
-| Backend unit + API tests | `cd backend && .venv/bin/python -m pytest -q` | **69 passed, 0 failed** |
+| Backend unit + API tests | `cd backend && .venv/bin/python -m pytest -q` | **69 passed, 0 failed** on Python 3.11 and on Python 3.13 |
 | Frontend type check + production build | `cd frontend && npm run build` | **Passed** |
 | Browser journey, desktop 1440×900 and Pixel 7 | `node e2e/journey.js` against the production build | **Passed**, 0 console errors or warnings, 0 server 5xx, no horizontal overflow on any page |
 | Python dependency audit | `pip-audit -r backend/requirements.txt` | **No known vulnerabilities** |
 | npm dependency audit (runtime) | `npm audit --omit=dev` | **0 vulnerabilities** (after upgrading React Router, see below) |
 | Secret scan | `git grep` for key patterns | **None found** |
-| Docker image | `docker build` | **Not run**: no Docker daemon in the build environment |
+| Docker image | `docker build` | **Not run**: no Docker daemon in the test environment |
 | Ask Summa against the live Claude API | | **Not run**: no API key was available. The tool loop is tested with a stubbed model |
 
 ## What the backend tests cover
@@ -58,6 +58,7 @@ Desktop only, additionally: open a Zomato payment and change its category (saved
 | 6 | Review of demo output | A one-off ₹18,499 purchase inflated the suggested Shopping budget | One-off purchases are excluded from suggestions and listed |
 | 7 | Browser test | Logged-out landing page logged a 401 error in the console | `/auth/me` returns `{user: null}` |
 | 8 | npm audit | React Router 6.28 had high-severity open-redirect advisories | Upgraded to 7.18.5; journey re-run and passed |
+| 10 | Self-review on Python 3.11 | The backend did not start on Python 3.11 (f-string syntax legal only from 3.12) | Rewritten; suite run on 3.11 |
 | 9 | Screenshot review | A stationery shop was labelled a "subscription" | Education payments are no longer called subscriptions |
 
 ## How to reproduce

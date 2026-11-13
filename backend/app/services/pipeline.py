@@ -42,7 +42,8 @@ class ImportResult:
 
 def fingerprint(raw: RawMessage) -> str:
     stamp = raw.received_at.isoformat() if raw.received_at else ""
-    payload = f"{raw.sender.strip().lower()}|{re.sub(r'\\s+', ' ', raw.body.strip())}|{stamp}"
+    body = re.sub(r"\s+", " ", raw.body.strip())
+    payload = f"{raw.sender.strip().lower()}|{body}|{stamp}"
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 

@@ -81,7 +81,11 @@ def create_message(
     try:
         if settings.llm_model.startswith(_FALLBACK_MODELS):
             # If a safety classifier declines the request, the API retries it on a fallback model.
-            return client.beta.messages.create(betas=[_FALLBACK_BETA], fallbacks="default", **params)
+            try:
+                return client.beta.messages.create(betas=[_FALLBACK_BETA], fallbacks="default", **params)
+            except anthropic.BadRequestError as exc:
+                # An account or platform without this option: send the plain request instead.
+                log.warning("fallback option rejected, retrying without it: %s", exc)
         return client.messages.create(**params)
     except anthropic.AuthenticationError as exc:
         raise LLMUnavailable("The configured ANTHROPIC_API_KEY was rejected.", 503) from exc
