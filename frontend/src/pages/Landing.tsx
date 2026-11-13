@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, Lock, MessageSquareText, PiggyBank, ShieldAlert, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, type User } from "../api/client";
@@ -7,10 +7,11 @@ import { Logo } from "../components/Layout";
 import { Notice, Spinner } from "../components/ui";
 import { errorMessage } from "../hooks";
 
-const SAMPLE_IN = [
-  { s: "VM-HDFCBK", b: "Sent Rs.412.00 From HDFC Bank A/C *4821 To SWIGGY On 08/11/26 Ref 427612…", ok: true },
-  { s: "+91 98120 45567", b: "Your HDFC Bank account will be blocked today. Update KYC at hdfc-kyc-update.in", ok: false },
-  { s: "AD-SBIUPI", b: "A/C X7730 debited by 45.0 on date 08Nov26 trf to SRI GANESH TEA STALL", ok: true },
+const TAPE = [
+  { s: "VM-HDFCBK", b: "Sent Rs.412.00 From HDFC Bank A/C *4821 To SWIGGY On 08/11/26", out: "FOOD & DINING", amt: "−412.00", scam: false },
+  { s: "AD-SBIUPI", b: "A/C X7730 debited by 45.0 on date 08Nov26 trf to SRI GANESH TEA STALL", out: "FOOD & DINING", amt: "−45.00", scam: false },
+  { s: "+91 98120 45567", b: "Your HDFC Bank account will be blocked today. Update KYC at hdfc-kyc-update.in", out: "NOT COUNTED", amt: "", scam: true },
+  { s: "VM-HDFCBK", b: "Your a/c XX4821 is credited with INR 45,000.00 by NEFT from ACME TECH PVT LTD", out: "SALARY", amt: "+45,000.00", scam: false },
 ];
 
 export default function Landing() {
@@ -31,7 +32,6 @@ export default function Landing() {
       navigate(mode === "signup" ? "/import" : "/dashboard");
     } catch (err) { setError(errorMessage(err)); } finally { setBusy(null); }
   };
-
   const demo = async () => {
     setBusy("demo"); setError(null);
     try {
@@ -42,60 +42,73 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen bg-ink-900 text-white">
-      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-8 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:py-14">
+    <div className="min-h-screen">
+      <header className="flex items-center justify-between border-b-2 border-ink-900 px-5 py-4 sm:px-10">
+        <Logo size="lg" />
+        <span className="kicker hidden sm:block">Passbook No. 2026 / UPI</span>
+      </header>
+
+      <div className="mx-auto grid max-w-6xl gap-12 px-5 py-10 sm:px-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:py-16">
         <section>
-          <Logo />
-          <h1 className="mt-10 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-            Your SMS inbox already knows where your money went.
+          <div className="kicker">Bank SMS in · budget and scam warnings out</div>
+          <h1 className="mt-4 font-display text-[44px] font-semibold leading-[0.98] tracking-tight sm:text-7xl">
+            Your inbox<br />already kept<br /><em className="text-brand-600">the accounts.</em>
           </h1>
-          <p className="mt-5 max-w-xl text-lg text-ink-300">
-            Summa reads the bank and UPI alerts on your phone and turns them into a budget, scam warnings and answers you can check.
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-ink-700">
+            Every UPI payment sends you a text. Summa reads them, adds them up, tells you where the month went, and stamps the fake ones before they cost you.
           </p>
 
-          <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-ink-400">Same inbox, two jobs</div>
-            <ul className="space-y-2">
-              {SAMPLE_IN.map((m) => (
-                <li key={m.s} className="flex items-start gap-3 rounded-xl bg-ink-800/80 p-3 text-sm">
-                  <span className={`mt-0.5 shrink-0 rounded-md px-1.5 py-0.5 text-[10px] font-bold ${m.ok ? "bg-brand-500/20 text-brand-200" : "bg-red-500/20 text-red-200"}`}>
-                    {m.ok ? "LEDGER" : "SCAM"}
-                  </span>
-                  <div className="min-w-0"><div className="text-xs text-ink-400">{m.s}</div><div className="truncate text-ink-100">{m.b}</div></div>
-                </li>
-              ))}
-            </ul>
+          {/* receipt tape */}
+          <div className="mt-10 max-w-xl">
+            <div className="border border-b-0 border-ink-900 bg-white px-4 pt-4">
+              <div className="flex justify-between border-b border-dashed border-ink-900/40 pb-2 font-mono text-[11px] uppercase tracking-widest text-ink-500"><span>Message</span><span>Entry</span></div>
+              <ul>
+                {TAPE.map((m, i) => (
+                  <li key={i} className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-dashed border-ink-900/30 py-3 last:border-b-0">
+                    <div className="min-w-0">
+                      <div className="font-mono text-[10px] uppercase tracking-wider text-ink-400">{m.s}</div>
+                      <div className={`truncate font-mono text-[12.5px] ${m.scam ? "text-ink-400 line-through decoration-red-600" : "text-ink-800"}`}>{m.b}</div>
+                    </div>
+                    <div className="text-right">
+                      {m.scam ? <span className="stamp border-red-600 text-red-600">Scam</span> : <div className={`num text-sm font-semibold ${m.amt.startsWith("+") ? "text-brand-600" : ""}`}>{m.amt}</div>}
+                      <div className="mt-1 font-mono text-[9.5px] uppercase tracking-wider text-ink-400">{m.out}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="perforated h-3 border-x border-ink-900 bg-white" />
           </div>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <dl className="mt-10 grid max-w-xl grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2">
             {[
-              { icon: PiggyBank, t: "A budget that builds itself", d: "Every UPI, card and ATM alert is parsed, categorised and totalled." },
-              { icon: ShieldAlert, t: "Scam Shield", d: "Fake KYC, collect requests and parcel scams flagged with the reason why." },
-              { icon: MessageSquareText, t: "Ask in plain words", d: "“How much did I spend on food this month?” Answers cite the transactions." },
-              { icon: Lock, t: "Private by default", d: "Parsing runs on the server you control. Identifiers are masked before any AI call." },
-            ].map(({ icon: Icon, t, d }) => (
-              <div key={t} className="flex gap-3">
-                <Icon className="mt-0.5 h-5 w-5 shrink-0 text-brand-400" aria-hidden />
-                <div><div className="font-semibold">{t}</div><div className="text-sm text-ink-400">{d}</div></div>
+              ["01", "A budget that writes itself", "Parsed, categorised and totalled from the alerts you already get."],
+              ["02", "Scam Shield", "Fake KYC, collect requests and parcel fees, flagged with the reason."],
+              ["03", "Ask in plain words", "Answers come with the transactions behind them. No guessed numbers."],
+              ["04", "Yours to delete", "Runs on a server you control. Identifiers are masked before any AI call."],
+            ].map(([n, t, d]) => (
+              <div key={n} className="border-t border-ink-900 pt-3">
+                <dt className="flex items-baseline gap-2"><span className="font-mono text-[11px] text-ink-400">{n}</span><span className="font-display text-lg font-medium">{t}</span></dt>
+                <dd className="mt-1 text-sm text-ink-600">{d}</dd>
               </div>
             ))}
-          </div>
+          </dl>
         </section>
 
-        <section className="lg:pt-16">
-          <div className="rounded-3xl bg-white p-6 text-ink-900 shadow-2xl sm:p-8">
-            <button onClick={demo} disabled={busy !== null} className="btn-brand w-full py-3 text-base">
-              {busy === "demo" ? <Spinner className="h-5 w-5 text-white" /> : <Sparkles className="h-5 w-5" />}
-              {busy === "demo" ? "Reading 200+ sample messages…" : "Try the demo, no sign-up"}
+        <section className="lg:pt-6">
+          <div className="border-2 border-ink-900 bg-white p-6 shadow-hard sm:p-8">
+            <div className="kicker">Specimen account</div>
+            <button onClick={demo} disabled={busy !== null} className="btn-brand mt-3 w-full py-3.5 text-sm">
+              {busy === "demo" ? <><Spinner className="h-4 w-4 text-white" />Reading 200+ sample messages…</> : <>Try the demo, no sign-up <ArrowRight className="h-4 w-4" /></>}
             </button>
-            <p className="mt-2 text-center text-xs text-ink-500">Loads a synthetic inbox through the real parser. Nothing real is used.</p>
+            <p className="mt-2 font-mono text-[11px] text-ink-500">Synthetic inbox, real parser. Nothing of yours is used.</p>
 
-            <div className="my-6 flex items-center gap-3 text-xs text-ink-400"><div className="h-px flex-1 bg-ink-100" />or use your own messages<div className="h-px flex-1 bg-ink-100" /></div>
+            <div className="my-7 flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-ink-400"><div className="h-px flex-1 border-t border-dashed border-ink-900/40" />or open your own<div className="h-px flex-1 border-t border-dashed border-ink-900/40" /></div>
 
-            <div className="mb-5 grid grid-cols-2 rounded-xl bg-ink-50 p-1 text-sm font-semibold" role="tablist">
+            <div className="mb-5 grid grid-cols-2 border border-ink-900" role="tablist">
               {(["signup", "login"] as const).map((m) => (
                 <button key={m} role="tab" aria-selected={mode === m} onClick={() => { setMode(m); setError(null); }}
-                  className={`rounded-lg py-2 ${mode === m ? "bg-white shadow-card" : "text-ink-500"}`}>
+                  className={`py-2 font-mono text-xs font-semibold uppercase tracking-wider ${mode === m ? "bg-ink-900 text-white" : "bg-white text-ink-600 hover:bg-ink-100"}`}>
                   {m === "signup" ? "Create account" : "Log in"}
                 </button>
               ))}
@@ -111,17 +124,16 @@ export default function Landing() {
               <div><label className="label" htmlFor="password">Password</label>
                 <input id="password" type="password" className="input" required minLength={mode === "signup" ? 8 : 1}
                   autoComplete={mode === "signup" ? "new-password" : "current-password"} value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-                {mode === "signup" && <p className="mt-1 text-xs text-ink-500">At least 8 characters.</p>}</div>
+                {mode === "signup" && <p className="mt-1 font-mono text-[11px] text-ink-500">At least 8 characters.</p>}</div>
               {error && <Notice tone="error">{error}</Notice>}
               <button className="btn-primary w-full py-3" disabled={busy !== null}>
-                {busy === "form" ? <Spinner className="h-4 w-4 text-white" /> : <ArrowRight className="h-4 w-4" />}
+                {busy === "form" && <Spinner className="h-4 w-4 text-white" />}
                 {mode === "signup" ? "Create account" : "Log in"}
               </button>
             </form>
           </div>
-          <p className="mt-6 flex items-start gap-2 text-xs text-ink-400">
-            <Bot className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
-            Summa explains your own spending. It is not a licensed financial adviser and does not move money.
+          <p className="mt-6 font-mono text-[11px] leading-relaxed text-ink-500">
+            Summa explains your own spending. It is not a licensed financial adviser and never moves money.
           </p>
         </section>
       </div>

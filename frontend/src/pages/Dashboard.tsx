@@ -8,6 +8,8 @@ import { ErrorState, NoDataCta, Notice, PageHeader, Skeleton, Spinner, Stat } fr
 import { colorFor, compactInr, dateLabel, inr, monthLabel, pct, titleCase } from "../format";
 import { errorMessage, useApi } from "../hooks";
 
+const TIP = { background: "#fcf9f2", border: "1px solid #161411", borderRadius: 2, fontFamily: "IBM Plex Mono", fontSize: 12 };
+
 const TONE = {
   warn: { icon: AlertTriangle, cls: "text-amber-600 bg-amber-50" },
   good: { icon: CheckCircle2, cls: "text-brand-700 bg-brand-50" },
@@ -39,7 +41,7 @@ function InsightsCard({ month, items, aiAvailable }: { month: string; items: Ins
         )}
       </div>
       {narrative && (
-        <div className="mb-4 rounded-xl bg-gradient-to-br from-brand-50 to-white p-4 text-sm leading-relaxed text-ink-800">
+        <div className="mb-4 border-l-4 border-brand-600 bg-brand-50 p-4 font-display text-[15px] leading-relaxed text-ink-800">
           {narrative.text}
           <div className="mt-2 text-xs text-ink-500">
             {narrative.unverified.length === 0 ? "Every figure above was checked against your data." : `Could not verify: ${narrative.unverified.join(", ")}`}
@@ -99,7 +101,7 @@ export default function Dashboard() {
       />
 
       {scamTotal > 0 && (
-        <Link to="/shield" className="mb-5 flex items-center gap-3 rounded-2xl border border-red-200 bg-red-50 p-4 text-sm text-red-900 transition hover:bg-red-100">
+        <Link to="/shield" className="mb-6 flex items-center gap-3 border-2 border-red-600 bg-red-50 p-4 text-sm text-red-900 transition hover:bg-red-100">
           <ShieldAlert className="h-6 w-6 shrink-0 text-red-600" aria-hidden />
           <span><b>{scamTotal} risky message{scamTotal > 1 ? "s" : ""}</b> found in your inbox. None were counted as spending. Review them →</span>
         </Link>
@@ -130,12 +132,12 @@ export default function Dashboard() {
               <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={s.daily} margin={{ left: 0, right: 8, top: 8, bottom: 0 }}>
-                    <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stopColor="#10b37c" stopOpacity={0.3} /><stop offset="100%" stopColor="#10b37c" stopOpacity={0} /></linearGradient></defs>
-                    <CartesianGrid stroke="#e9edf3" vertical={false} />
-                    <XAxis dataKey="date" tickFormatter={(d) => String(Number(d.slice(8)))} tick={{ fontSize: 11, fill: "#7a8aa3" }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-                    <YAxis tickFormatter={compactInr} tick={{ fontSize: 11, fill: "#7a8aa3" }} tickLine={false} axisLine={false} width={48} />
-                    <Tooltip formatter={(v: number, name) => [inr(v), name === "cumulative_spend" ? "Spent so far" : "Spent that day"]} labelFormatter={(d) => dateLabel(String(d))} />
-                    <Area type="monotone" dataKey="cumulative_spend" stroke="#079467" strokeWidth={2} fill="url(#g)" />
+                    <defs><pattern id="g" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#1e6943" strokeWidth="1.2" opacity="0.45" /></pattern></defs>
+                    <CartesianGrid stroke="#161411" strokeOpacity={0.18} strokeDasharray="2 4" vertical={false} />
+                    <XAxis dataKey="date" tickFormatter={(d) => String(Number(d.slice(8)))} tick={{ fontSize: 10, fill: "#665d4e", fontFamily: "IBM Plex Mono" }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
+                    <YAxis tickFormatter={compactInr} tick={{ fontSize: 10, fill: "#665d4e", fontFamily: "IBM Plex Mono" }} tickLine={false} axisLine={false} width={48} />
+                    <Tooltip contentStyle={TIP} formatter={(v: number, name) => [inr(v), name === "cumulative_spend" ? "Spent so far" : "Spent that day"]} labelFormatter={(d) => dateLabel(String(d))} />
+                    <Area type="stepAfter" dataKey="cumulative_spend" stroke="#161411" strokeWidth={1.75} fill="url(#g)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -148,10 +150,10 @@ export default function Dashboard() {
                   <div className="mx-auto h-40 w-40 shrink-0">
                     <ResponsiveContainer>
                       <PieChart>
-                        <Pie data={s.by_category} dataKey="amount" nameKey="label" innerRadius={48} outerRadius={72} paddingAngle={1} stroke="none">
+                        <Pie data={s.by_category} dataKey="amount" nameKey="label" innerRadius={44} outerRadius={72} paddingAngle={0} stroke="#fcf9f2" strokeWidth={2}>
                           {s.by_category.map((c) => <Cell key={c.category} fill={colorFor(c.category)} />)}
                         </Pie>
-                        <Tooltip formatter={(v: number) => inr(v)} />
+                        <Tooltip contentStyle={TIP} formatter={(v: number) => inr(v)} />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>

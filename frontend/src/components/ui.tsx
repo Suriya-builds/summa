@@ -15,7 +15,7 @@ export function Loading({ label = "Loading" }: { label?: string }) {
 }
 
 export function Skeleton({ className = "" }: { className?: string }) {
-  return <div className={`animate-pulse rounded-xl bg-ink-100 ${className}`} />;
+  return <div className={`animate-pulse bg-ink-200/70 ${className}`} />;
 }
 
 export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
@@ -31,7 +31,7 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
 export function EmptyState({ title, body, action }: { title: string; body: string; action?: ReactNode }) {
   return (
     <div className="card flex flex-col items-center gap-3 px-6 py-12 text-center">
-      <div className="rounded-2xl bg-ink-50 p-3"><Inbox className="h-7 w-7 text-ink-400" aria-hidden /></div>
+      <div className="border border-dashed border-ink-900/50 p-3"><Inbox className="h-7 w-7 text-ink-500" aria-hidden /></div>
       <h3 className="text-base font-semibold">{title}</h3>
       <p className="max-w-md text-sm text-ink-500">{body}</p>
       {action}
@@ -51,10 +51,10 @@ export function NoDataCta() {
 
 export function PageHeader({ title, subtitle, actions }: { title: string; subtitle?: ReactNode; actions?: ReactNode }) {
   return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div className="mb-7 flex flex-col gap-4 border-b-2 border-ink-900 pb-5 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <h1 className="h1">{title}</h1>
-        {subtitle && <p className="muted mt-1">{subtitle}</p>}
+        {subtitle && <p className="mt-2.5 font-mono text-xs text-ink-500">{subtitle}</p>}
       </div>
       {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
     </div>
@@ -63,30 +63,26 @@ export function PageHeader({ title, subtitle, actions }: { title: string; subtit
 
 export function Notice({ tone = "info", children }: { tone?: "info" | "warn" | "error" | "good"; children: ReactNode }) {
   const styles = {
-    info: "border-sky-200 bg-sky-50 text-sky-900",
-    warn: "border-amber-200 bg-amber-50 text-amber-900",
-    error: "border-red-200 bg-red-50 text-red-800",
-    good: "border-brand-200 bg-brand-50 text-brand-800",
+    info: "border-sky-700 bg-sky-50 text-sky-900",
+    warn: "border-amber-600 bg-amber-50 text-amber-900",
+    error: "border-red-600 bg-red-50 text-red-800",
+    good: "border-brand-600 bg-brand-50 text-brand-800",
   }[tone];
-  return <div className={`rounded-xl border px-4 py-3 text-sm ${styles}`} role={tone === "error" ? "alert" : undefined}>{children}</div>;
+  return <div className={`border border-l-4 px-4 py-3 text-sm ${styles}`} role={tone === "error" ? "alert" : undefined}>{children}</div>;
 }
 
 export function Stat({ label, value, hint, tone }: { label: string; value: ReactNode; hint?: ReactNode; tone?: "good" | "bad" }) {
   return (
-    <div className="card p-4 sm:p-5">
-      <div className="text-xs font-medium uppercase tracking-wide text-ink-500">{label}</div>
-      <div className={`num mt-1.5 text-2xl font-bold ${tone === "good" ? "text-brand-700" : tone === "bad" ? "text-red-600" : "text-ink-900"}`}>{value}</div>
-      {hint && <div className="mt-1 text-xs text-ink-500">{hint}</div>}
+    <div className="border-t-[3px] border-ink-900 bg-white px-4 pb-4 pt-3" style={{ boxShadow: "inset -1px 0 0 rgba(22,20,17,.8), inset 1px 0 0 rgba(22,20,17,.8), inset 0 -1px 0 rgba(22,20,17,.8)" }}>
+      <div className="kicker">{label}</div>
+      <div className={`num mt-2 text-[26px] font-semibold leading-none sm:text-[30px] ${tone === "good" ? "text-brand-600" : tone === "bad" ? "text-red-600" : "text-ink-900"}`}>{value}</div>
+      {hint && <div className="mt-2 border-t border-dashed border-ink-900/30 pt-2 font-mono text-[11px] text-ink-500">{hint}</div>}
     </div>
   );
 }
 
 export function LevelBadge({ level }: { level: "safe" | "suspicious" | "dangerous" }) {
-  const map = {
-    dangerous: "bg-red-100 text-red-800",
-    suspicious: "bg-amber-100 text-amber-800",
-    safe: "bg-brand-100 text-brand-800",
-  } as const;
-  const text = { dangerous: "Dangerous", suspicious: "Suspicious", safe: "Looks safe" }[level];
-  return <span className={`chip ${map[level]}`}>{text}</span>;
+  const map = { dangerous: "border-red-600 text-red-600", suspicious: "border-amber-600 text-amber-700", safe: "border-brand-600 text-brand-600" } as const;
+  const text = { dangerous: "Scam", suspicious: "Suspect", safe: "Clear" }[level];
+  return <span className={`stamp ${map[level]}`}>{text}</span>;
 }

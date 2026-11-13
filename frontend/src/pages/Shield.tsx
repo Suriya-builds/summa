@@ -9,7 +9,7 @@ function Meter({ score, level }: { score: number; level: ScamVerdict["level"] })
   const color = level === "dangerous" ? "bg-red-500" : level === "suspicious" ? "bg-amber-500" : "bg-brand-500";
   return (
     <div className="flex items-center gap-2">
-      <div className="h-1.5 w-24 overflow-hidden rounded-full bg-ink-100"><div className={`h-full ${color}`} style={{ width: `${Math.round(score * 100)}%` }} /></div>
+      <div className="h-2 w-24 overflow-hidden border border-ink-900/70 bg-white"><div className={`h-full ${color}`} style={{ width: `${Math.round(score * 100)}%` }} /></div>
       <span className="num text-xs text-ink-500">{Math.round(score * 100)}/100</span>
     </div>
   );
@@ -90,7 +90,7 @@ export default function Shield() {
                       <LevelBadge level={a.level} /><Meter score={a.score} level={a.level} />
                       <span className="ml-auto text-xs text-ink-500">{a.sender || "Unknown sender"} · {dateLabel(a.received_at)}</span>
                     </div>
-                    <p className="rounded-lg bg-ink-50 p-3 font-mono text-[13px] leading-relaxed text-ink-800">{a.body}</p>
+                    <p className="border border-dashed border-ink-900/30 bg-ink-50 p-3 font-mono text-[13px] leading-relaxed text-ink-800">{a.body}</p>
                     <div className="mt-3 text-xs font-semibold uppercase tracking-wide text-ink-500">Why it was flagged</div>
                     <ul className="mt-1 space-y-1 text-sm">{a.reasons.map((r) => <li key={r.code} className="flex gap-2"><ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-red-500" aria-hidden />{r.text}</li>)}</ul>
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
