@@ -8,7 +8,7 @@ def test_auth_flow(client):
     assert "summa_session" in r.headers["set-cookie"] and "HttpOnly" in r.headers["set-cookie"]
     assert client.get("/api/auth/me").json()["user"]["email"] == "flow@example.com"
     client.post("/api/auth/logout")
-    assert client.get("/api/auth/me").status_code == 401
+    assert client.get("/api/auth/me").json() == {"user": None}
     assert client.post("/api/auth/login", json={"email": "flow@example.com", "password": "wrong"}).status_code == 401
     assert client.post("/api/auth/login", json={"email": "flow@example.com", "password": "password123"}).status_code == 200
     assert client.post("/api/auth/signup", json={"name": "A", "email": "flow@example.com", "password": "password123"}).status_code == 409

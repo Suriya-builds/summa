@@ -95,5 +95,9 @@ def logout(request: Request, response: Response, db: Session = Depends(get_db)) 
 
 
 @router.get("/me")
-def me(user: User = Depends(get_current_user)) -> dict:
-    return {"user": user_dict(user)}
+def me(request: Request, db: Session = Depends(get_db)) -> dict:
+    """The signed-in user, or null. Returns 200 either way so a logged-out page load is not an error."""
+    try:
+        return {"user": user_dict(get_current_user(request, db))}
+    except HTTPException:
+        return {"user": None}

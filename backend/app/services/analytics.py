@@ -231,7 +231,7 @@ def monthly_trend(db: Session, user_id: int, months: int = 6) -> list[dict]:
     return out
 
 
-SUBSCRIPTION_CATEGORIES = {"entertainment", "personal", "education"}
+SUBSCRIPTION_CATEGORIES = {"entertainment", "personal"}
 BILL_CATEGORIES = {"bills", "health"}
 
 

@@ -19,3 +19,4 @@ backend/data/
 .DS_Store
 test-results/
 playwright-report/
+e2e/out/
