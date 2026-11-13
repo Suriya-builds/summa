@@ -11,8 +11,8 @@ import re
 _PAN = re.compile(r"\b[A-Z]{5}\d{4}[A-Z]\b")
 _AADHAAR = re.compile(r"(?<!\d)\d{4}[\s-]\d{4}[\s-]\d{4}(?!\d)")
 _EMAIL = re.compile(r"\b[\w.+-]+@[\w-]+\.[a-z]{2,}(?:\.[a-z]{2,})?\b", re.I)
-_PHONE = re.compile(r"(?<![\d,.])(?:\+?91[\s-]?)?[6-9]\d{9}(?!\d)")
-_LONG_DIGITS = re.compile(r"(?<![\d,.])[A-Za-z]{0,2}\d{9,}(?![\d,.])")
+_PHONE = re.compile(r"(?<![\d,.])(?:\+?91[\s-]?)?[6-9]\d{9}(?!\d|[.,]\d)")
+_LONG_DIGITS = re.compile(r"(?<![\d,.])[A-Za-z]{0,2}\d{9,}(?!\d|[.,]\d)")
 _OTP = re.compile(r"(?<!\d)\d{4,8}(?!\d)(?=[^.]{0,40}\b(?:otp|one[\s-]?time|verification code|passcode)\b)|"
                   r"(?<=\botp\b)([^.\d]{0,30})\d{4,8}(?!\d)", re.I)
 _CURRENCY_BEFORE = re.compile(r"(?:rs\.?|inr|₹)\s*[:\-]?\s*$", re.I)
