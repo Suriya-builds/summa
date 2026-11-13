@@ -8,7 +8,7 @@ Chosen for build speed, a one-command run for judges, and as few moving parts as
 | Database | SQLite through SQLAlchemy 2 | Zero setup for judges; `DATABASE_URL` switches to Postgres for hosting | Postgres only — adds a setup step to every clone |
 | ML | scikit-learn (TF-IDF + logistic regression) | Small, fast, explainable, trains in seconds on CPU | Fine-tuned transformer — too heavy to justify for short SMS text |
 | LLM | Claude through the official `anthropic` SDK | Reliable tool calling; allowed by the brief | Hard dependency on any LLM — the core must run with no key |
-| Frontend | React 18 + TypeScript + Vite | Fast builds, typed API client | Next.js — server rendering adds nothing here |
+| Frontend | React 18 + React Router 7 + TypeScript + Vite | Fast builds, typed API client | Next.js — server rendering adds nothing here |
 | Styling | Tailwind CSS | Consistent responsive UI quickly | Component library — more weight than needed |
 | Charts | Recharts | Declarative, responsive | D3 by hand — slower to build |
 | Auth | scrypt (Python standard library) + server-side sessions in an HTTP-only cookie | No extra dependency; sessions can be revoked | JWT in localStorage — readable by any injected script |

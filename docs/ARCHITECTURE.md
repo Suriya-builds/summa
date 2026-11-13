@@ -157,7 +157,7 @@ Session state lives in an HTTP-only cookie. The SPA holds no token.
 | Session theft through script injection | HTTP-only cookie; React escapes all rendered SMS text |
 | Cross-site request forgery | `SameSite=Strict` cookie; API accepts JSON, not form posts |
 | Prompt injection through SMS text | SMS content reaches the model only as tool-result data; tools are read-only and scoped to the user |
-| Leaking identifiers to the LLM | Account numbers, card numbers, phone numbers, UPI IDs, PAN and Aadhaar patterns are masked |
+| Leaking identifiers to the LLM | Long account, card and reference numbers, phone numbers, PAN, Aadhaar, emails and one-time codes are masked. Payee names and UPI handles are kept so answers can name them |
 | Malicious upload | Size cap, UTF-8 text only, XML with DTD or entities rejected |
 | Secrets in the repo | `.env` is git-ignored; `.env.example` holds names only |
 | Credential stuffing | Rate limit per IP on auth endpoints |

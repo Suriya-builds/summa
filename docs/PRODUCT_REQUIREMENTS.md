@@ -44,7 +44,7 @@ dozens of times a week and have no idea where the month went.
 - **The language model never does arithmetic.** It calls typed tools; code computes every number.
   Each answer lists the transactions it is based on.
 - **Local first.** No message leaves the machine unless the user asks a question or turns on LLM
-  parsing, and account numbers, phone numbers and UPI IDs are masked before anything is sent.
+  parsing, and account numbers, phone numbers, PAN and similar identifiers are masked before anything is sent.
 - **Every scam verdict is explained** with the specific signals that fired.
 
 ## 3. Users and journeys
@@ -105,5 +105,5 @@ Priority: P0 = required for submission, P1 = included if P0 is stable.
 
 - A new user reaches a populated dashboard in under a minute using the sample inbox.
 - The rule parser extracts amount and direction correctly on every format in the test corpus.
-- No answer from Ask Summa contains a figure that was not returned by a tool.
+- Every money figure in an Ask Summa answer is checked against tool output, and any that cannot be matched is shown to the user.
 - The demo runs start to finish without a network connection, apart from Ask Summa.
